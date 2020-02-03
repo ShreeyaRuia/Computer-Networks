@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dnsprac10cnclient;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.URI;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Admin
+ */
+public class Dnsprac10cnclient {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        try{
+       Socket s=new Socket("localhost",6666); 
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            Scanner sc=new Scanner(System.in);
+            System.out.println("CLIENT PLEASE ENTER DOMAIN");
+            String domain=sc.next();
+            dout.writeUTF(domain);
+            System.out.println("PLEASE WAIT CLIENT RESPONDING");
+            String x=dis.readUTF();
+            java.awt.Desktop.getDesktop().browse(new URI(x));
+      }
+        catch(Exception e){
+            
+        }
+    }
+    
+}

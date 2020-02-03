@@ -1,0 +1,61 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+write a program to implement go back n protocol given operations are expected
+1.a station may send multiple frames as allowed by senders send
+2. reciever send negetive acknowlegment if frame i has error after that recvier discards all incoming frame 
+until the 
+frame with error is correctly retransmitted if sender recieves a negetive acknowlegment it will retransmit
+frame i and all frames which have been send but havent been acknowledged
+ */
+package gobackserver;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
+
+
+
+public class Gobackserver {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        try{
+            ServerSocket ss=new ServerSocket(6666);
+            Socket s=ss.accept();
+            Scanner sc=new Scanner(System.in);
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            System.out.println("Enter number of frames");
+            int framenumber=sc.nextInt();
+            int i=0;
+            dout.writeInt(framenumber);
+            while(i<framenumber)
+            {
+                System.out.println("SENDING FRAME "+i+"....");
+                dout.writeUTF("Frame numer"+i);
+                i++;
+            }
+            System.out.println("\\\\\\\\NEGATIVE ACKNOWLEDGEMENT RECIEVED AT FRAME 4");
+            int x=4;
+            while(x!=framenumber)
+            {
+                System.out.println("SENDING FRAME AGAIN"+x+".....");
+                dout.writeUTF("Frame number"+x);
+                x++;
+            }
+            System.out.println("\\\\\\\\ALL FRAMES SENT");
+        }
+        catch(Exception e){
+            
+        }
+        
+    }
+    
+}

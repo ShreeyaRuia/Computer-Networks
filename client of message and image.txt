@@ -1,0 +1,53 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package myclient;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.net.Socket;
+import java.util.Scanner;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author Admin
+ */
+public class Myclient {
+
+    /**
+     * @param args the command line arguments
+     */
+    static BufferedImage image = null;
+    public static void main(String[] args) {
+        // TODO code application logic here
+           try{      
+               
+            Socket s=new Socket("localhost",6666); 
+            String mess = null;
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            /*image = ImageIO.read(s.getInputStream());
+            File output_file = new File("G:\\Out.png");
+            ImageIO.write(image, "png",output_file);*/
+            do
+            {
+            System.out.println("ENTER MESSAGE TO PASS TO Server");
+            Scanner sc =new Scanner(System.in);
+            mess=sc.nextLine();
+           dout.writeUTF(mess);
+           String  str=(String)dis.readUTF();
+           System.out.println("message from client= "+str);
+            }while( !mess.equals("Exit"));
+           s.close();  
+           }catch(Exception e){System.out.println(e);} 
+    }
+    
+}

@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+
+write a program to implement go back n protocol given operations are expected
+1.a station may send multiple frames as allowed by senders send
+2. reciever send negetive acknowlegment if frame i has error after that recvier discards all incoming frame until the 
+frame with error is correctly retransmitted if sender recieves a negetive acknowlegment it will retransmit
+frame i and all frames which have been send but havent been acknowledged
+ */
+package gobackclient;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
+/**
+ *
+ * @author Admin
+ */
+public class Gobackclient {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+         try{
+        Socket s=new Socket("localhost",6666); 
+            String mess = null;
+            int i=0;
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            int framenumber=dis.readInt();
+            while(i<4){
+                i++;
+                String  str=(String)dis.readUTF();
+                System.out.println("FRAME RECIEVED.."+str);
+            }
+            while(i<framenumber){
+                i++;
+                String  str=(String)dis.readUTF();
+                System.out.println("DISCARDING FRAME.."+str);
+            }
+            i=4;
+            while(i<framenumber){
+                i++;
+                String  str=(String)dis.readUTF();
+                System.out.println("FRAME RECIEVED After damage.."+str);
+            }
+             System.out.println("\\\\\\\\\\ ALL FRAMES RECIEVED");
+         }
+         catch(Exception e){
+             
+         }
+    }
+}

@@ -1,0 +1,49 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cnprac8;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Admin
+ */
+public class Cnprac8 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the value of capacity ");
+        int c=sc.nextInt();
+        System.out.println("Enter the value of maximum outgoing speed");
+        int m=sc.nextInt();
+        System.out.println("Enter the value of rho");
+        int rho=sc.nextInt();
+        System.out.println("Enter the number of users");
+        int user=sc.nextInt();
+        int sum=0;
+        for (int i=0;i<user;i++){
+        System.out.println("Enter the number of time and speed for user"+i);
+            int time=sc.nextInt();
+            int speed=sc.nextInt();
+            sum=sum+(speed*time);
+        }
+        int s=c/(m-rho)+1;
+        int data=s*m;
+        if(data>sum){
+            System.out.println("finished:"+s+"seconds");
+        }
+        else{
+            int x=(((sum-data)/rho)+s);
+            System.out.println("finished:"+x+"seconds");
+        }
+        
+        
+    }
+    
+}

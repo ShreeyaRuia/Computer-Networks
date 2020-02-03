@@ -1,0 +1,48 @@
+
+package dnsprac10cn;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URI;
+import java.net.URL;
+import java.util.Scanner;
+
+
+public class Dnsprac10cn {
+    
+
+    
+    public static void main(String[] args) {
+        try {
+            ServerSocket ss=new ServerSocket(6666);
+            Socket sss=ss.accept();
+            String s;
+            DataInputStream dis=new DataInputStream(sss.getInputStream());
+            DataOutputStream dout=new DataOutputStream(sss.getOutputStream());
+                        String getdomain=dis.readUTF();
+                        System.out.println("IP ADDRESS TO BE FINE OF:"+getdomain);
+			Scanner scanner = new Scanner(new File("find.txt"));
+			while (scanner.hasNextLine()) {
+				s=scanner.nextLine();
+                               if (s.contains(getdomain)){
+                                   int i=s.indexOf(" ");
+                                  String x= s.substring(i+1);
+                                   System.out.println("SENDING TO CLIENT:"+x);
+                                   dout.writeUTF(x);
+                                   //java.awt.Desktop.getDesktop().browse(new URI(x));
+                               }
+			}
+			scanner.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+    }
+    
+}

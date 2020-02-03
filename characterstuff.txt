@@ -1,0 +1,104 @@
+
+import java.util.Scanner;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author Admin
+ */
+public class Character {
+
+    static String flag="$";
+    static String esc="#";
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("ENTER MESSAGE TO BE SENT");
+        String message=sc.next();
+        char[] emess=message.toCharArray();
+        char encrypt[]=new char[30];
+        int check=0,i=0,j=0;
+        for(i=0;i<flag.length();i++)
+        {
+            encrypt[j]=flag.charAt(i);
+            j++;
+        }
+        if(message.contains("$") || message.contains("#"))
+        {
+            i=0;
+            while(i!=emess.length)
+            {
+                if(emess[i]=='$' || emess[i]=='#')
+                {
+                    encrypt[j]='#';
+                    j++;
+                    encrypt[j]=emess[i];
+                    i++;
+                    j++;
+                }
+                else{
+                    encrypt[j]=emess[i];
+                    i++;
+                    j++;
+                }
+            }
+            for(i=0;i<flag.length();i++)
+        {
+            encrypt[j]=flag.charAt(i);
+            j++;
+        }
+           System.out.println("MESSAGE ENCRYTED IS:");
+           for(i=0;i<encrypt.length;i++)
+           {
+            System.out.print(encrypt[i]);
+        }
+        }
+        else
+        {
+            System.out.println("ENCRYPTED MESSAGE IS :" + flag+message+flag);
+        }
+        
+        System.out.println("\n"+"ENTER ENCRYTED MESSAGE");
+        message= sc.next();
+        char[] dmess=message.toCharArray();
+        char decrypt[]=new char[30];
+        i=flag.length();
+        j=0;
+        if(message.contains(esc))
+        {
+            while(i!=(dmess.length-flag.length()))
+            {
+                if(dmess[i]=='#')
+                {
+                    i++;
+                    decrypt[j]=dmess[i];
+                    j++;
+                    i++;
+                }
+                else{
+                    decrypt[j]=dmess[i];
+                    j++;
+                    i++;
+                }
+            }
+            System.out.println("MESSAGE DECRYTED IS:");
+           for(i=0;i<decrypt.length;i++)
+           {
+            System.out.print(decrypt[i]);
+        }
+        }
+        else
+        {
+            System.out.println("MESSAGE DECRYTED IS:");
+           for(i=flag.length()+1;i<=dmess.length-flag.length();i++)
+           {
+            System.out.print(dmess[i]);
+        }
+        }
+        // TODO code application logic here
+    }
+    
+}
